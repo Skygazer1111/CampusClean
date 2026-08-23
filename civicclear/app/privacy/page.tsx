@@ -28,13 +28,6 @@ export default function PrivacyPage() {
             password.
           </li>
           <li>
-            <strong className="font-semibold text-ink">
-              Optional identity check
-            </strong>{" "}
-            — if you provide an Aadhaar number, we store only a one-way hash,
-            never the raw number.
-          </li>
-          <li>
             <strong className="font-semibold text-ink">Report content</strong>{" "}
             — titles, descriptions, issue type, photos, campus location, and
             status history.
@@ -115,8 +108,7 @@ export default function PrivacyPage() {
 
       <LegalSection title="Security">
         <p>
-          Passwords are hashed. Optional Aadhaar values are hashed before
-          storage. Sessions use secure cookies. Uploaded images are checked for
+          Passwords are hashed. Sessions use secure cookies. Uploaded images are checked for
           allowed types and size. No method of transmission or storage is
           perfectly secure; we take reasonable steps to protect your data.
         </p>

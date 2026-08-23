@@ -88,7 +88,6 @@ export default async function ProfilePage() {
           name={user.name}
           phone={user.phone ?? ""}
           email={user.email}
-          hasAadhaar={Boolean(user.aadhaarHash)}
           hasPassword={Boolean(user.passwordHash)}
         />
       </div>

@@ -4,7 +4,6 @@ import { hash } from "bcryptjs";
 import { revalidatePath } from "next/cache";
 import { auth } from "@/features/auth/auth";
 import {
-  hashAadhaar,
   setPasswordSchema,
   updateProfileSchema,
 } from "@/features/profile/schemas";
@@ -22,7 +21,6 @@ export async function updateProfileAction(
   const parsed = updateProfileSchema.safeParse({
     name: formData.get("name"),
     phone: formData.get("phone"),
-    aadhaar: formData.get("aadhaar") || "",
   });
 
   if (!parsed.success) {
@@ -39,9 +37,6 @@ export async function updateProfileAction(
     data: {
       name: parsed.data.name,
       phone: parsed.data.phone,
-      ...(parsed.data.aadhaar
-        ? { aadhaarHash: hashAadhaar(parsed.data.aadhaar) }
-        : {}),
     },
   });
 

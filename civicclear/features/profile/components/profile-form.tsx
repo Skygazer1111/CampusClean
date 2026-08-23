@@ -14,7 +14,6 @@ type Props = {
   name: string;
   phone: string;
   email: string;
-  hasAadhaar: boolean;
   hasPassword: boolean;
 };
 
@@ -22,7 +21,6 @@ export function ProfileForm({
   name,
   phone,
   email,
-  hasAadhaar,
   hasPassword,
 }: Props) {
   const [state, formAction, pending] = useActionState(
@@ -59,24 +57,6 @@ export function ProfileForm({
             defaultValue={phone}
             required
           />
-        </div>
-        <div>
-          <Label htmlFor="aadhaar">Aadhaar (optional)</Label>
-          <Input
-            id="aadhaar"
-            name="aadhaar"
-            inputMode="numeric"
-            placeholder={
-              hasAadhaar
-                ? "Aadhaar on file — enter to replace"
-                : "12-digit number"
-            }
-            autoComplete="off"
-          />
-          <p className="mt-1 text-xs text-ink-muted">
-            Stored as a one-way hash only. The full number is never shown again.
-            {hasAadhaar ? " Status: on file." : ""}
-          </p>
         </div>
 
         <FormErrorBanner message={state?.error} />
