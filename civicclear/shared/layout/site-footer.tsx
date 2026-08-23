@@ -13,6 +13,15 @@ export function SiteFooter({ className }: { className?: string }) {
           <span className="font-semibold text-ink">CampusClean</span>. All rights
           reserved.
         </p>
+        <p className="tracking-tight">
+          Built By{" "}
+          <a
+            href="https://portfolio-priyan.vercel.app/"
+            className="font-display text-base font-semibold text-accent transition-colors hover:text-accent-hover hover:underline"
+          >
+            Priyan
+          </a>
+        </p>
         <nav
           className="flex flex-wrap gap-x-5 gap-y-2"
           aria-label="Legal"
