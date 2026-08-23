@@ -23,6 +23,7 @@ export function RegisterForm() {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [devCode, setDevCode] = useState<string | undefined>();
+  const [otpCode, setOtpCode] = useState("");
 
   async function onDetails(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -43,6 +44,7 @@ export function RegisterForm() {
     setPhone(String(formData.get("phone") ?? ""));
     setPassword(String(formData.get("password") ?? ""));
     setDevCode(result && "devCode" in result ? result.devCode : undefined);
+    setOtpCode("");
     setStep("code");
   }
 
@@ -52,6 +54,7 @@ export function RegisterForm() {
     setPending(true);
 
     const formData = new FormData(event.currentTarget);
+    formData.set("code", otpCode);
     formData.set("email", email);
     formData.set("name", name);
     formData.set("phone", phone);
@@ -110,13 +113,18 @@ export function RegisterForm() {
           ) : null}
         </p>
         <div>
-          <Label htmlFor="code">Email verification code</Label>
+          <Label htmlFor="otp-code">Email verification code</Label>
           <Input
-            id="code"
-            name="code"
+            id="otp-code"
+            name="otpCode"
+            type="text"
             inputMode="numeric"
-            autoComplete="one-time-code"
+            autoComplete="off"
             placeholder="6-digit code"
+            value={otpCode}
+            onChange={(event) =>
+              setOtpCode(event.target.value.replace(/\D/g, "").slice(0, 6))
+            }
             required
             pattern="\d{6}"
             maxLength={6}
@@ -140,6 +148,7 @@ export function RegisterForm() {
             setStep("details");
             setError(null);
             setDevCode(undefined);
+            setOtpCode("");
           }}
         >
           Edit details
