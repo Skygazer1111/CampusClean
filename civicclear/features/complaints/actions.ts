@@ -32,6 +32,7 @@ export async function createComplaintAction(
     title: formData.get("title"),
     description: formData.get("description"),
     addressText: formData.get("addressText"),
+    floor: formData.get("floor"),
   });
 
   if (!parsed.success) {
@@ -63,6 +64,7 @@ export async function createComplaintAction(
       lat: null,
       lng: null,
       addressText: parsed.data.addressText,
+      floor: parsed.data.floor,
       status: "submitted",
       photos: {
         create: photos.map((photo) => ({

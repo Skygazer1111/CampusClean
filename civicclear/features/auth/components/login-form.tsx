@@ -102,6 +102,14 @@ function PasswordLogin({
         return;
       }
 
+      if (setup && "removedAccount" in setup && setup.removedAccount) {
+        setError(
+          "That account was removed. Create a new student account, or ask an admin to invite this email again.",
+        );
+        setPending(false);
+        return;
+      }
+
       if (setup && "ok" in setup && setup.ok && "role" in setup) {
         onStaffSetup(
           email,

@@ -84,10 +84,11 @@ export default async function OfficialComplaintDetailPage({
           {complaint.description}
         </p>
 
-        {complaint.addressText ? (
+        {complaint.addressText || complaint.floor ? (
           <p className="mt-4 text-sm text-ink-muted">
             <span className="font-semibold text-ink">Campus location:</span>{" "}
             {complaint.addressText}
+            {complaint.floor ? ` · Floor ${complaint.floor}` : ""}
           </p>
         ) : null}
 

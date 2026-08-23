@@ -80,6 +80,20 @@ export function ComplaintForm() {
         </select>
       </div>
 
+      <div>
+        <Label htmlFor="floor">Floor</Label>
+        <select id="floor" name="floor" required className="field" defaultValue="">
+          <option value="" disabled>
+            Select a floor
+          </option>
+          {Array.from({ length: 15 }, (_, index) => index + 1).map((floor) => (
+            <option key={floor} value={floor}>
+              Floor {floor}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <PhotoPicker />
 
       <div id={formErrorId}>

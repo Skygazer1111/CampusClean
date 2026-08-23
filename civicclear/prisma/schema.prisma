@@ -74,17 +74,18 @@ model Complaint {
   id                 String          @id @default(cuid())
   publicRef          String          @unique
   citizenId          String
-  citizen            User            @relation("CitizenComplaints", fields: [citizenId], references: [id])
+  citizen            User            @relation("CitizenComplaints", fields: [citizenId], references: [id], onDelete: Cascade)
   type               ComplaintType
   title              String
   description        String
   lat                Float?
   lng                Float?
   addressText        String?
+  floor              Int?
   status             ComplaintStatus @default(submitted)
   priority           Priority        @default(medium)
   assignedOfficialId String?
-  assignedOfficial   User?           @relation("AssignedOfficial", fields: [assignedOfficialId], references: [id])
+  assignedOfficial   User?           @relation("AssignedOfficial", fields: [assignedOfficialId], references: [id], onDelete: SetNull)
   createdAt          DateTime        @default(now())
   updatedAt          DateTime        @updatedAt
   resolvedAt         DateTime?
@@ -122,7 +123,7 @@ model ComplaintEvent {
   complaintId String
   complaint   Complaint        @relation(fields: [complaintId], references: [id], onDelete: Cascade)
   actorId     String
-  actor       User             @relation(fields: [actorId], references: [id])
+  actor       User             @relation(fields: [actorId], references: [id], onDelete: Cascade)
   fromStatus  ComplaintStatus?
   toStatus    ComplaintStatus
   note        String?

@@ -33,6 +33,7 @@ export async function buildComplaintsCsv(filters: QueueFilters) {
     "studentName",
     "studentEmail",
     "campusLocation",
+    "floor",
     "createdAt",
     "resolvedAt",
   ];
@@ -47,6 +48,7 @@ export async function buildComplaintsCsv(filters: QueueFilters) {
       c.citizen.name,
       c.citizen.email,
       c.addressText ?? "",
+      c.floor ? `Floor ${c.floor}` : "",
       c.createdAt.toISOString(),
       c.resolvedAt?.toISOString() ?? "",
     ]

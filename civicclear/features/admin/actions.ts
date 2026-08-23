@@ -6,7 +6,7 @@ import { auth } from "@/features/auth/auth";
 import {
   createOfficialSchema,
   createStudentSchema,
-  setManagedUserActiveSchema,
+  deleteManagedUserSchema,
 } from "@/features/auth/schemas";
 import { prisma } from "@/shared/db/prisma";
 
@@ -38,7 +38,11 @@ export async function createOfficialAction(
     return { error: "That email is reserved for the admin account." };
   }
 
-  const existing = await prisma.user.findUnique({ where: { email } });
+  let existing = await prisma.user.findUnique({ where: { email } });
+  if (existing && !existing.active && existing.role !== "admin") {
+    await prisma.user.delete({ where: { id: existing.id } });
+    existing = null;
+  }
   if (existing) {
     return { error: "An account with this email already exists." };
   }
@@ -75,7 +79,11 @@ export async function createStudentAction(
   }
 
   const email = parsed.data.email.toLowerCase().trim();
-  const existing = await prisma.user.findUnique({ where: { email } });
+  let existing = await prisma.user.findUnique({ where: { email } });
+  if (existing && !existing.active && existing.role !== "admin") {
+    await prisma.user.delete({ where: { id: existing.id } });
+    existing = null;
+  }
   if (existing) {
     return { error: "An account with this email already exists." };
   }
@@ -94,16 +102,15 @@ export async function createStudentAction(
   return { ok: true as const };
 }
 
-export async function setManagedUserActiveAction(
+export async function deleteManagedUserAction(
   _prev: { error?: string; ok?: boolean } | undefined,
   formData: FormData,
 ) {
   const session = await requireAdmin();
   if (!session) return { error: "Admin access required." };
 
-  const parsed = setManagedUserActiveSchema.safeParse({
+  const parsed = deleteManagedUserSchema.safeParse({
     userId: formData.get("userId"),
-    active: formData.get("active"),
   });
   if (!parsed.success) {
     return { error: parsed.error.issues[0]?.message ?? "Invalid request" };
@@ -121,10 +128,8 @@ export async function setManagedUserActiveAction(
     return { error: "You cannot remove your own account." };
   }
 
-  const active = parsed.data.active === "true";
-  await prisma.user.update({
+  await prisma.user.delete({
     where: { id: target.id },
-    data: { active },
   });
 
   revalidatePath("/admin");

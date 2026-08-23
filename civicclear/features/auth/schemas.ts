@@ -95,9 +95,8 @@ export const createStudentSchema = z.object({
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
-export const setManagedUserActiveSchema = z.object({
+export const deleteManagedUserSchema = z.object({
   userId: z.string().min(1),
-  active: z.enum(["true", "false"]),
 });
 
 export function homePathForRole(role?: string | null) {

@@ -21,7 +21,7 @@ export {
 export {
   createOfficialAction,
   createStudentAction,
-  setManagedUserActiveAction,
+  deleteManagedUserAction,
 } from "@/features/admin/actions";
 export { LoginForm } from "@/features/auth/components/login-form";
 export { RegisterForm } from "@/features/auth/components/register-form";

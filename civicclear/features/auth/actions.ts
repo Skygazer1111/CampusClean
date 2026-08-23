@@ -47,17 +47,18 @@ async function persistAndSendOtp(email: string) {
 async function issueCitizenOtp(email: string) {
   const normalized = email.toLowerCase().trim();
 
-  const existingUser = await prisma.user.findUnique({
+  let existingUser = await prisma.user.findUnique({
     where: { email: normalized },
   });
+  if (existingUser && !existingUser.active) {
+    await prisma.user.delete({ where: { id: existingUser.id } });
+    existingUser = null;
+  }
   if (existingUser && existingUser.role !== "citizen") {
     return {
       error:
         "This email belongs to a staff account. Sign in with this email to set up or use your password.",
     };
-  }
-  if (existingUser && !existingUser.active) {
-    return { error: "This account is deactivated." };
   }
 
   const issued = await persistAndSendOtp(normalized);
@@ -108,7 +109,11 @@ export async function registerCitizenWithOtpAction(
   }
 
   const email = parsed.data.email.toLowerCase().trim();
-  const existing = await prisma.user.findUnique({ where: { email } });
+  let existing = await prisma.user.findUnique({ where: { email } });
+  if (existing && !existing.active) {
+    await prisma.user.delete({ where: { id: existing.id } });
+    existing = null;
+  }
   if (existing) {
     return {
       error: "An account with this email already exists. Sign in with your password.",
@@ -187,6 +192,10 @@ export async function verifyCitizenOtpAction(
     : null;
 
   let user = await prisma.user.findUnique({ where: { email } });
+  if (user && !user.active) {
+    await prisma.user.delete({ where: { id: user.id } });
+    user = null;
+  }
   if (!user) {
     if (!parsed.data.name || !parsed.data.phone) {
       return {
@@ -216,9 +225,6 @@ export async function verifyCitizenOtpAction(
     });
   }
 
-  if (!user.active) {
-    return { error: "This account is deactivated." };
-  }
   if (user.role !== "citizen") {
     return {
       error:
@@ -260,7 +266,10 @@ export async function beginStaffSetupAction(
 
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) return { notStaff: true as const };
-    if (!user.active) return { error: "This account is deactivated." };
+    if (!user.active) {
+      await prisma.user.delete({ where: { id: user.id } });
+      return { removedAccount: true as const };
+    }
     if (user.role !== "admin" && user.role !== "official") {
       return { notStaff: true as const };
     }

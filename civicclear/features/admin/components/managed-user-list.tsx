@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { setManagedUserActiveAction } from "@/features/admin/actions";
+import { deleteManagedUserAction } from "@/features/admin/actions";
 import { Button } from "@/shared/ui/button";
 import { FormErrorBanner } from "@/shared/ui/field-error";
 
@@ -10,7 +10,6 @@ type ManagedUser = {
   name: string;
   email: string;
   phone: string | null;
-  active: boolean;
   createdAt: Date;
   pendingSetup?: boolean;
 };
@@ -43,7 +42,7 @@ export function ManagedUserList({
 
 function ManagedUserRow({ user }: { user: ManagedUser }) {
   const [state, action, pending] = useActionState(
-    setManagedUserActiveAction,
+    deleteManagedUserAction,
     undefined,
   );
 
@@ -55,32 +54,20 @@ function ManagedUserRow({ user }: { user: ManagedUser }) {
         {user.phone ? (
           <p className="text-xs text-ink-muted">{user.phone}</p>
         ) : null}
-        {user.active && user.pendingSetup ? (
+        {user.pendingSetup ? (
           <p className="mt-1 text-xs text-accent">Pending setup</p>
-        ) : null}
-        {!user.active ? (
-          <p className="mt-1 text-xs text-status-rejected">Removed</p>
         ) : null}
       </div>
       <form action={action}>
         <input type="hidden" name="userId" value={user.id} />
-        <input
-          type="hidden"
-          name="active"
-          value={user.active ? "false" : "true"}
-        />
         <Button
           type="submit"
-          variant={user.active ? "outline" : "default"}
+          variant="outline"
           size="sm"
           disabled={pending}
           aria-busy={pending}
         >
-          {pending
-            ? "Saving…"
-            : user.active
-              ? "Remove"
-              : "Restore"}
+          {pending ? "Deleting…" : "Delete"}
         </Button>
       </form>
       {state?.error ? (

@@ -104,8 +104,13 @@ export async function buildComplaintPdf(complaintId: string) {
     }`,
     10,
   );
-  if (complaint.addressText) {
-    write(`Campus location: ${complaint.addressText}`, 10);
+  if (complaint.addressText || complaint.floor) {
+    write(
+      `Campus location: ${complaint.addressText ?? "Not specified"}${
+        complaint.floor ? ` · Floor ${complaint.floor}` : ""
+      }`,
+      10,
+    );
   }
   y -= 8;
   write("Description", 12, { bold: true });

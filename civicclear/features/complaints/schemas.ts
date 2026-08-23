@@ -20,4 +20,9 @@ export const createComplaintSchema = z.object({
       (value) => (CAMPUS_LOCATIONS as readonly string[]).includes(value),
       "Select a campus location",
     ),
+  floor: z.coerce
+    .number({ error: "Select a floor" })
+    .int("Select a floor")
+    .min(1, "Select a floor")
+    .max(15, "Campus buildings have floors 1 to 15"),
 });
