@@ -77,7 +77,7 @@ export function LandingExperience({ signedIn, signedInHome }: Props) {
         <div aria-hidden className="landing-hero-grain absolute inset-0 opacity-[0.18]" />
         <div aria-hidden className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-canvas to-transparent" />
 
-        <div className="relative z-10 mx-auto flex min-h-dvh w-full max-w-page items-center justify-center px-4 py-20 text-center sm:px-6 sm:py-24">
+        <div className="relative z-10 mx-auto flex min-h-dvh w-full max-w-page items-center justify-center px-4 pb-16 pt-28 text-center sm:px-6 sm:py-24">
           <div className="mx-auto max-w-4xl">
             <h1 className="rise-in mx-auto max-w-4xl font-display text-[2.75rem] font-semibold leading-[0.92] tracking-tight text-white drop-shadow-2xl sm:text-7xl lg:text-8xl">
               Make campus problems impossible to ignore.
@@ -137,15 +137,15 @@ export function LandingExperience({ signedIn, signedInHome }: Props) {
         </div>
       </section>
 
-      <section className="relative z-10 mx-auto max-w-page px-4 py-16 sm:px-6 sm:py-24">
+      <section className="relative z-10 mx-auto max-w-page px-4 py-16 text-center sm:px-6 sm:py-24 lg:text-left">
         <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
           <div>
             <p className="page-kicker">Built for students</p>
-            <h2 className="mt-3 max-w-xl font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
+            <h2 className="mx-auto mt-3 max-w-xl font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:mx-0">
               Cleaner campus, less admin energy.
             </h2>
           </div>
-          <p className="max-w-2xl text-base leading-relaxed text-ink-muted sm:text-lg">
+          <p className="mx-auto max-w-2xl text-base leading-relaxed text-ink-muted sm:text-lg lg:mx-0">
             CampusClean feels like a student app, not a complaint office. Quick
             posts, visible progress, and a feed that makes every fix feel
             shared.
@@ -156,7 +156,7 @@ export function LandingExperience({ signedIn, signedInHome }: Props) {
           {STUDENT_STEPS.map((item) => (
             <li
               key={item.step}
-              className="landing-bento-card group rounded-[1.75rem] border border-white/75 bg-white/64 p-6 shadow-[0_18px_55px_rgba(16,56,46,0.08)] backdrop-blur-md"
+              className="landing-bento-card group rounded-[1.75rem] border border-white/75 bg-white/64 p-6 text-center shadow-[0_18px_55px_rgba(16,56,46,0.08)] backdrop-blur-md sm:text-left"
             >
               <p className="font-display text-5xl font-semibold leading-none text-accent/25 transition-colors group-hover:text-accent/45">
                 {item.step}
@@ -174,7 +174,7 @@ export function LandingExperience({ signedIn, signedInHome }: Props) {
 
       <section className="relative z-10 overflow-hidden bg-ink py-16 text-white sm:py-24">
         <div aria-hidden className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(15,143,120,0.38),transparent_32%),radial-gradient(circle_at_80%_80%,rgba(207,234,246,0.22),transparent_34%)]" />
-        <div className="relative mx-auto grid max-w-page gap-5 px-4 sm:px-6 lg:grid-cols-3">
+        <div className="relative mx-auto grid max-w-page gap-5 px-4 text-center sm:px-6 lg:grid-cols-3 lg:text-left">
           {FEATURE_CARDS.map((card) => (
             <article
               key={card.title}
@@ -202,16 +202,16 @@ export function LandingExperience({ signedIn, signedInHome }: Props) {
       </section>
 
       <section className="relative z-10 overflow-hidden py-16 sm:py-24">
-        <div className="mx-auto max-w-page px-4 sm:px-6">
+        <div className="mx-auto max-w-page px-4 text-center sm:px-6 lg:text-left">
           <div className="rounded-[2rem] border border-line/60 bg-white/72 p-6 shadow-[0_24px_70px_rgba(16,56,46,0.08)] backdrop-blur-md sm:p-8">
             <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
               <div>
                 <p className="page-kicker">Across SRM</p>
-                <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+                <h2 className="mx-auto mt-3 max-w-xl font-display text-3xl font-semibold tracking-tight sm:text-4xl lg:mx-0">
                   Every block students actually say out loud.
                 </h2>
               </div>
-              <p className="text-sm leading-relaxed text-ink-muted sm:text-base">
+              <p className="mx-auto max-w-2xl text-sm leading-relaxed text-ink-muted sm:text-base lg:mx-0">
                 Pick from known campus locations instead of fighting with GPS.
                 That keeps reports fast and makes coordinator queues clearer.
               </p>
