@@ -16,7 +16,8 @@ export function LogoutButton({ callbackUrl = "/" }: Props) {
     if (pending) return;
     setPending(true);
     try {
-      await signOut({ callbackUrl, redirect: true });
+      await signOut({ callbackUrl, redirect: false });
+      window.location.assign(callbackUrl);
     } catch {
       // If Auth.js redirect throws or network fails, still leave the app shell.
       window.location.assign(callbackUrl);
